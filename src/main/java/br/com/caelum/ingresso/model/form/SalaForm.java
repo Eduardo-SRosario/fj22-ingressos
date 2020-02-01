@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.caelum.ingresso.model.Lugar;
@@ -13,18 +15,18 @@ import br.com.caelum.ingresso.model.Sala;
 
 public class SalaForm {
     private Integer salaId;
+    @NotNull
     private BigDecimal preco;
+    @NotBlank
+    private String nome;
 
     public BigDecimal getPreco() {
-		return preco.setScale(2, RoundingMode.HALF_UP);
+		return this.preco.setScale(2, RoundingMode.HALF_UP);
 	}
 
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
 	}
-
-	@NotBlank
-    private String nome;
 
     private List<Lugar> lugares = new ArrayList<>();
 
@@ -35,6 +37,7 @@ public class SalaForm {
         this.salaId = sala.getId();
         this.nome = sala.getNome();
         this.lugares = new ArrayList<>(sala.getLugares());
+        this.preco = sala.getPreco();
     }
 
     public Integer getSalaId() {
